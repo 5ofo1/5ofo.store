@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5OFO Studio | Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      background-image: url('https://k.top4top.io/p_34633s6w21.gif');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+<body class="relative text-[#444] font-sans antialiased leading-relaxed tracking-wide text-base overflow-x-hidden">
+
+  <!-- Background overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-45 backdrop-blur-sm z-0 pointer-events-none"></div>
+
+  <!-- Visitor count -->
+  <div id="visitor-count" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-white/10 text-white px-4 py-2 rounded-full backdrop-blur-md border border-white/20 shadow-md text-sm z-50">
+    Loading visitors...
+  </div>
+
+  <!-- ENGLISH VERSION -->
+  <div id="en" class="relative z-10">
+    <header class="py-4 px-4">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 sm:gap-6 px-4 bg-white/20 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-white/30">
+        <h1 class="text-2xl font-bold text-white flex items-center space-x-2">
+          <span>🌸</span><span>5OFO Studio</span>
+        </h1>
+        <nav class="space-x-6">
+          <a href="home.html" onclick="setLang('en')" class="text-pink-200 transition">Home</a>
+          <a href="products.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">Products</a>
+          <a href="about.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">About</a>
+          <a href="contact.html" onclick="setLang('en')" class="text-white hover:text-pink-200 transition">Contact</a>
+        </nav>
+        <select id="lang-select-en" class="bg-white/80 text-pink-600 px-4 py-2 rounded-full shadow hover:bg-pink-100 transition text-sm">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="text-center mt-20 px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold text-pink-600 mb-4">Welcome to 5OFO Store</h2>
+      <p class="text-base sm:text-lg text-gray-200 max-w-xl mx-auto">It is a store that sells all online services, Discord services, and social media services in general.</p>
+    </main>
+  </div>
+
+  <!-- ARABIC VERSION -->
+  <div id="ar" class="hidden relative z-10" dir="rtl">
+   <header class="py-4 px-4">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 sm:gap-6 px-4 bg-white/20 backdrop-blur-md rounded-full px-6 py-3 shadow-lg border border-white/30">
+        <h1 class="text-2xl font-bold text-white flex items-center space-x-2">
+          <span>🌸</span><span>استوديو 5OFO</span>
+        </h1>
+        <nav class="space-x-6 flex flex-row-reverse gap-6">
+          <a href="home.html" onclick="setLang('ar')" class="text-pink-200 transition">الرئيسية</a>
+          <a href="products.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">المنتجات</a>
+          <a href="about.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">من نحن</a>
+          <a href="contact.html" onclick="setLang('ar')" class="text-white hover:text-pink-200 transition">اتصل بنا</a>
+        </nav>
+        <select id="lang-select-ar" class="bg-white/80 text-pink-600 px-4 py-2 rounded-full shadow hover:bg-pink-100 transition text-sm">
+          <option value="en">English</option>
+          <option value="ar">العربية</option>
+        </select>
+      </div>
+    </header>
+
+    <main class="text-center mt-20 px-4">
+      <h2 class="text-3xl sm:text-4xl font-bold text-[#D16A7D] mb-4">مرحبا بكم في 5OFO store</h2>
+      <p class="text-base sm:text-lg text-gray-200 max-w-xl mx-auto">هو ستور لبيع جميع الخدمات الاونلاين و خدمات الديسكورد و خدمات السوشيال ميديا بشكل عام</p>
+    </main>
+  </div>
+
+  <!-- LANGUAGE + VISITOR SCRIPT -->
+  <script>
+    const langSelectEn = document.getElementById("lang-select-en");
+    const langSelectAr = document.getElementById("lang-select-ar");
+    const enDiv = document.getElementById("en");
+    const arDiv = document.getElementById("ar");
+
+    function setLang(lang) {
+      localStorage.setItem("selectedLang", lang);
+      toggleLang(lang);
+      updateLangSelectors(lang);
+    }
+
+    function toggleLang(lang) {
+      if (lang === "ar") {
+        enDiv.classList.add("hidden");
+        arDiv.classList.remove("hidden");
+      } else {
+        arDiv.classList.add("hidden");
+        enDiv.classList.remove("hidden");
+      }
+    }
+
+    function updateLangSelectors(lang) {
+      if (langSelectEn) langSelectEn.value = lang;
+      if (langSelectAr) langSelectAr.value = lang;
+    }
+
+    const savedLang = localStorage.getItem("selectedLang") || "en";
+    toggleLang(savedLang);
+    updateLangSelectors(savedLang);
+
+    [langSelectEn, langSelectAr].forEach(select => {
+      if (select) {
+        select.addEventListener("change", () => {
+          const selected = select.value;
+          setLang(selected);
+        });
+      }
+    });
+
+    // Visitor count fetch
+    fetch('counter.php')
+      .then(res => res.text())
+      .then(count => {
+        const lang = localStorage.getItem('selectedLang') || 'en';
+        document.querySelectorAll('#visitor-count').forEach(el => {
+          el.textContent = lang === 'ar'
+            ? `عدد الزوار: ${count}`
+            : `Total Visitors: ${count}`;
+        });
+      })
+      .catch(() => {
+        const lang = localStorage.getItem('selectedLang') || 'en';
+        document.querySelectorAll('#visitor-count').forEach(el => {
+          el.textContent = lang === 'ar'
+            ? `عدد الزوار: غير متاح`
+            : `Total Visitors: N/A`;
+        });
+      });
+  </script>
+</body>
+</html>
